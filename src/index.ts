@@ -9,6 +9,8 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/subscriptions", subscriptionsRoutes);
+app.use("/plans", plansRoutes);
 
 app.use("/api/subscriptions", subscriptionRoutes);
 
