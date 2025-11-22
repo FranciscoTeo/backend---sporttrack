@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+# URL do repositório remoto (modifique se usar SSH)
+REPO_URL="https://github.com/FranciscoTeo/backend---sporttrack.git"
+
+# Inicializar repositório se ainda não existir
+if [ ! -d .git ]; then
+  git init
+  echo "Repositório git inicializado."
+else
+  echo "Repositório git já inicializado."
+fi
+
+# Adicionar remote se não existir (ignora erro se já existir)
+git remote add origin "$REPO_URL" || true
+
+# Criar .gitignore mínimo
+cat > .gitignore <<'EOF'
+node_modules/
+dist/
+.env
+database.sqlite
+EOF
+
+echo ".gitignore criado/actualizado."
+
+# Criar e mudar para a branch de trabalho
+git checkout -B add-project-files
+
+# Adicionar todos os ficheiros e commitar
+git add .
+git commit -m "chore: add initial project files for sportstrack-backend" || echo "Nada para commitar (sem alterações)."
+
+# Push para o remoto e configurar upstream
+git push -u origin add-project-files
+
+echo "Branch 'add-project-files' enviada para remote origin."
